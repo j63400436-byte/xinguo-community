@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新國社區官方資訊網 | 數位友善鄰里平台</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+            transition: font-size 0.2s ease, background-color 0.2s ease;
+        }
+
+        :root {
+            --primary-color: #2e7d32;
+            --primary-hover: #1b5e20;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --base-font-size: 16px;
+        }
+
+        /* 大字體關懷模式 */
+        body.large-font {
+            --base-font-size: 20px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--base-font-size);
+            line-height: 1.6;
+        }
+
+        /* 緊急紅牌告示欄 */
+        .alert-banner {
+            background-color: #d32f2f;
+            color: white;
+            padding: 0.8rem 5%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-tool {
+            background-color: #e8f5e9;
+            color: var(--primary-color);
+            border: 1px solid #a5d6a7;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-tool:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Hero 區域與關懷打卡 */
+        .hero {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: #1b5e20;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .checkin-box {
+            background: white;
+            max-width: 450px;
+            margin: 1.5rem auto 0;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-checkin {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-checkin:hover {
+            background-color: #f57c00;
+        }
+
+        /* 主要內容區 */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .tag-btn {
+            padding: 0.6rem 1rem;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tag-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* 卡片列表 */
+        .announcement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .announcement-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .category-badge {
+            background-color: #e8f5e9;
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1a252f;
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-action {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Modal 彈窗 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            font-size: 1.5rem; border: none; background: none; cursor: pointer;
+        }
+
+        /* 快速報修區塊 */
+        .repair-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .repair-form input, .repair-form textarea {
+            width: 100%;
+            padding: 0.7rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部緊急公告 -->
+    <div class="alert-banner" id="alertBanner">
+        <span id="alertText">載入中...</span>
+    </div>
+
+    <!-- Header 導覽列 -->
+    <header>
+        <div class="logo">🏡 新國社區官方網</div>
+        <div class="header-controls">
+            <button class="btn-tool" onclick="toggleFontSize()">🔍 放大字體</button>
+            <button class="btn-tool" onclick="speakPage()">🔊 語音朗讀</button>
+        </div>
+    </header>
+
+    <!-- Hero 關懷打卡區 -->
+    <section class="hero">
+        <h1>歡迎來到新國社區數位家園</h1>
+        <p>長者友善 ‧ 即時資訊 ‧ 溫馨鄰里</p>
+        
+        <div class="checkin-box">
+            <div style="text-align: left;">
+                <strong style="color: #2e7d32;">☀️ 長者每日安心打卡</strong>
+                <p style="font-size: 0.85rem; color: #666;">點擊向社區志工回報今日平安</p>
+            </div>
+            <button class="btn-checkin" onclick="dailyCheckin()">今日平安打卡</button>
+        </div>
+    </section>
+
+    <!-- 主內容區 -->
+    <main class="container">
+        
+        <!-- 分類與搜尋 -->
+        <div class="filter-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="搜尋社區公告、活動或關鍵字..." oninput="handleFilter()">
+            <button class="tag-btn active" onclick="filterCategory('全部', this)">全部</button>
+            <button class="tag-btn" onclick="filterCategory('行政', this)">行政</button>
+            <button class="tag-btn" onclick="filterCategory('活動', this)">活動</button>
+            <button class="tag-btn" onclick="filterCategory('維修', this)">維修</button>
+            <button class="tag-btn" onclick="filterCategory('福利', this)">福利</button>
+        </div>
+
+        <!-- 公告列表 -->
+        <div class="announcement-list" id="announcementList"></div>
+
+        <!-- 社區公共設施線上報修專區 -->
+        <section class="repair-section">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">🛠️ 社區公共設施線上報修</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">若發現社區路燈損壞、遊具故障或環境衛生問題，歡迎隨時填表通報：</p>
+            <form class="repair-form" onsubmit="submitRepair(event)">
+                <input type="text" placeholder="您的姓名或門牌號碼" required>
+                <input type="text" placeholder="損壞設施名稱與具體地點（例如：東側公園第二盞路燈）" required>
+                <textarea rows="3" placeholder="詳細描述狀況（選填）"></textarea>
+                <button type="submit" class="btn-action" style="width: 100%; padding: 0.8rem;">送出通報單</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- 詳情與報名 Modal -->
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let allAnnouncements = [];
+        let currentCategory = '全部';
+
+        // 載入社區資料
+        async function loadData() {
+            try {
+                const res = await fetch('/api/community');
+                const data = await res.json();
+                
+                // 渲染緊急公告
+                if(data.alerts.length > 0) {
+                    document.getElementById('alertText').innerText = data.alerts[0].message;
+                }
+
+                allAnnouncements = data.announcements;
+                renderAnnouncements(allAnnouncements);
+            } catch(e) {
+                console.error('資料載入失敗', e);
+            }
+        }
+
+        // 渲染列表
+        function renderAnnouncements(items) {
+            const list = document.getElementById('announcementList');
+            if(items.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding:2rem; color:#777;">🔍 找不到符合條件的社區公告。</div>`;
+                return;
+            }
+
+            list.innerHTML = items.map(item => `
+                <div class="announcement-card">
+                    <div class="card-header">
+                        <span class="category-badge">${item.category}</span>
+                        <span style="font-size: 0.85rem; color: #777;">📅 ${item.date}</span>
+                    </div>
+                    <div class="card-title">${item.title}</div>
+                    <p style="color: #555;">${item.content}</p>
+                    <div class="card-footer">
+                        <button class="btn-tool" onclick="speakText('${item.title}。${item.content}')">🔊 朗讀</button>
+                        <button class="btn-action" onclick="openModal(${item.id})">查看詳情 / 線上報名</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 搜尋與篩選
+        function handleFilter() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const filtered = allAnnouncements.filter(item => {
+                const matchCategory = currentCategory === '全部' || item.category === currentCategory;
+                const matchQuery = item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query);
+                return matchCategory && matchQuery;
+            });
+            renderAnnouncements(filtered);
+        }
+
+        function filterCategory(category, btnElement) {
+            currentCategory = category;
+            document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            handleFilter();
+        }
+
+        // 大字體切換
+        function toggleFontSize() {
+            document.body.classList.toggle('large-font');
+        }
+
+        // 語音朗讀功能 (Web Speech API)
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // 停止先前的朗讀
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-TW';
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('您的瀏覽器不支援語音朗讀功能。');
+            }
+        }
+
+        function speakPage() {
+            speakText('歡迎使用新國社區官方網。目前最新緊急通知：' + document.getElementById('alertText').innerText);
+        }
+
+        // 安心打卡
+        function dailyCheckin() {
+            alert('❤️ 打卡成功！系統已將您的今日平安紀錄同步通知新國社區關懷志工隊。祝您有美好的一天！');
+        }
+
+        // 彈窗 Modal
+        function openModal(id) {
+            const item = allAnnouncements.find(a => a.id === id);
+            if(!item) return;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <span class="category-badge">${item.category}</span>
+                <h2 style="margin: 0.5rem 0; color: #2e7d32;">${item.title}</h2>
+                <p style="font-size: 0.85rem; color: #777; margin-bottom: 1rem;">發布日期：${item.date}</p>
+                
+                <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <strong>📋 詳細說明：</strong>
+                    <p style="white-space: pre-line; margin-top: 0.5rem; color: #444;">${item.details}</p>
+                </div>
+
+                <form onsubmit="submitForm(event, '${item.title}')">
+                    <h4 style="margin-bottom: 0.5rem;">📝 線上參與 / 預約登記</h4>
+                    <input type="text" placeholder="您的姓名" required style="width:100%; padding:0.6rem; margin-bottom:0.5rem; border:1px solid #ccc; border-radius:4px;">
+                    <input type="tel" placeholder="聯絡電話" required style="width:100%; padding:0.6rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;">
+                    <button type="submit" class="btn-action" style="width:100%; padding:0.7rem;">確認送出</button>
+                </form>
+            `;
+            document.getElementById('itemModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('itemModal').style.display = 'none';
+        }
+
+        function submitForm(e, title) {
+            e.preventDefault();
+            alert(`🎉 登記成功！您已完成「${title}」的預約登記。`);
+            closeModal();
+        }
+
+        function submitRepair(e) {
+            e.preventDefault();
+            alert('🛠️ 報修單已成功送出！新國社區管理委員會將於 24 小時內派員現場會勘。');
+            e.target.reset();
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
